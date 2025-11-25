@@ -22,7 +22,7 @@ jobs:
       uses: NuGet/setup-nuget@v2
 
     - name: Restore Packages
-      run: nuget restore AxonCorruptor.sln
+      run: nuget restore "Roblox Legacy Place Converter.sln"
 
     - name: Build solution
       run: msbuild "Roblox Legacy Place Converter.sln" -t:rebuild -property:Configuration=Release -property:Platform=x64 -property:Optimize=true
