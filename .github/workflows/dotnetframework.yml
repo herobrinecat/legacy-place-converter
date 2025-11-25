@@ -1,0 +1,35 @@
+name: CI
+on:
+    push:
+      branches: [ main ]
+    pull_request:
+      branches: [ main ]
+
+
+jobs:
+  build:
+
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v2
+
+    - name: Restore Packages
+      run: nuget restore AxonCorruptor.sln
+
+    - name: Build solution
+      run: msbuild "Roblox Legacy Place Converter.sln" -t:rebuild -property:Configuration=Release -property:Platform=x64 -property:Optimize=true
+      
+    - name: Upload artifact
+      uses: actions/upload-artifact@v5
+      with:
+          name: result
+          path: |
+              Roblox Legacy Place Converter/bin/x64/Release
